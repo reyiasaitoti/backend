@@ -26,17 +26,20 @@ router.post("/transcribe", upload.single("audio"), async (req, res) => {
     const filePath = path.join(process.cwd(), "src/uploads", req.file.filename);
     console.log("📂 File saved at:", filePath);
 
-    // Step 1: Transcribe the audio
-    const transcription = await transcribeAudio(filePath);
-    if (!transcription) {
+    // Step 1: Transcribe the audio (including summary)
+    const result = await transcribeAudio(filePath);
+
+    if (!result || !result.text) {
       return res.status(500).json({ error: "Transcription failed" });
     }
 
+    console.log("✅ Transcription & Summarization Complete");
 
-    // Send both transcription
+    // Send both transcription and summary
     res.json({
       message: "Transcription successful",
-      transcription,
+      transcription: result.text,
+      summary: result.summary || "No summary available",
     });
   } catch (error) {
     console.error("❌ Error:", error.message);

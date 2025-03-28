@@ -10,10 +10,8 @@ const cors = require("cors");
 
 const app = express();
 
-app.use("/api", protectedRoutes);
-app.use("/api", uploadRoutes);
-
-
+// ✅ Middleware: Enable JSON parsing
+app.use(express.json());
 
 // Enable CORS for frontend
 app.use(cors({ 
@@ -24,14 +22,15 @@ app.use(cors({
     // methods: "GET,POST",
     // allowedHeaders: "Content-Type"   
  })); 
-// ✅ Middleware: Enable JSON parsing
-app.use(express.json());
+
+
+app.use("/api", protectedRoutes);
+app.use("/api", uploadRoutes);
+
+
+
 
 app.use("/api/auth", authRoutes);
-
-// Middleware
-// app.use(cors());
-app.use(express.json()); // Parse JSON bodies
 
 // Sample route
 app.get("/", (req, res) => {
