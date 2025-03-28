@@ -16,7 +16,7 @@ const transcribeAudio = async (filePath) => {
       speaker_labels: true, // Enable speaker identification
       summarization: true, // Enable summarization
       summary_model: "informative",  // ✅ Add this
-      summary_type: "paragraph", // Options: "bullets", "gist", "headline", "paragraph"
+      summary_type: "bullets", // Options: "bullets", "gist", "headline", "paragraph"
     };
 
     // Step 1: Start Transcription
